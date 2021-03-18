@@ -19,5 +19,17 @@ namespace WebApiMovieEx1
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_BeginRequest()
+        {
+            string[] allowedOrigin = new string[] { "https://localhost:44376" };
+            var origin = HttpContext.Current.Request.Headers["Origin"];
+            if (origin != null && allowedOrigin.Contains(origin))
+            {
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", origin);
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "*");
+
+            }
+        }
     }
 }

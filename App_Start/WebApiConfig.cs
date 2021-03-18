@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.OData.Builder;
+using System.Web.Http.OData.Extensions;
+using WebApiMovieEx1.Models;
 
 namespace WebApiMovieEx1
 {
@@ -13,6 +16,9 @@ namespace WebApiMovieEx1
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Movies>("Movies");
+            config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
